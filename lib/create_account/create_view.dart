@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SingUpView extends StatefulWidget {
-  const SingUpView({super.key});
+class  CreateAccount extends StatefulWidget{
+  const CreateAccount({super.key});
 
   @override
-  State<SingUpView> createState() => _SingUpViewState();
+  State<CreateAccount> createState() => _CreateAccountState();
 }
 
-class _SingUpViewState extends State<SingUpView> {
+class _CreateAccountState extends State<CreateAccount> {
   final  TextEditingController userController = TextEditingController();
+  final  TextEditingController emailController = TextEditingController();
   final  TextEditingController passwordController = TextEditingController();
-  bool isChecked = false; // Define border style
-
+   Color color = Colors.grey;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +38,14 @@ class _SingUpViewState extends State<SingUpView> {
                       height: 44,
                     ),
                     Text(
-                      "Login",
+                      "Cereate Account",
                       style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      "Please login to find your dream job",
+                      "Please create an account to find your dream job ",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -59,9 +59,9 @@ class _SingUpViewState extends State<SingUpView> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                          width: 2.0,
-                          color: Color(0xff3366FF),
-                        )),
+                              width: 2.0,
+                              color: Color(0xff3366FF),
+                            )),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         fillColor: Colors.blue,
@@ -74,8 +74,33 @@ class _SingUpViewState extends State<SingUpView> {
                       height: 16,
                     ),
                     TextFormField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Color(0xff3366FF),
+                              )),
+                          prefixIcon: Icon(Icons.email_outlined),
+                          hintText: "Email",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0))),
+                      obscureText: false, // Hide the entered text for passwords
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    TextFormField(
+                      onEditingComplete: () {
+                        setState(() {
+
+                        });
+                      },
                       onTap: () {
                         setState(() {
+
+
 
                         });
                       },
@@ -84,39 +109,23 @@ class _SingUpViewState extends State<SingUpView> {
 
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                            width: 2.0,
-                            color: Color(0xff3366FF),
-                          )),
+                                width: 2.0,
+                                color: Color(0xff3366FF),
+                              )),
                           prefixIcon: Icon(Icons.lock),
                           hintText: "Password",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0))),
                       obscureText: true, // Hide the entered text for passwords
                     ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStatePropertyAll(isChecked == true ? Colors.blueAccent : Colors.white),
-                          value: isChecked,
-                          onChanged:(bool? value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        Text('Remember me'),
-                         SizedBox(width: 82,),
-                         TextButton(onPressed: () {}, child: Text("Forgot Password?",style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 14,fontWeight: FontWeight.w400),)),
-                      ],
-                    ),
-                    SizedBox(height: 173,),
+                      Text("Password must be at least 8 characters",style: TextStyle(color: color),),
+                    SizedBox(height: 137,),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 65  ),
                       child: Row(
                         children: [
-                          Text("Dont’t have an account?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Color(0xff9CA3AF)),),
-                          TextButton(onPressed: () {}, child: Text("Register",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor)))
+                          Text("Already have an account?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Color(0xff9CA3AF)),),
+                          TextButton(onPressed: () {}, child: Text("Login",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor)))
                         ],
                       ),
                     ),
@@ -125,9 +134,9 @@ class _SingUpViewState extends State<SingUpView> {
                         width: 327,
                         child: FilledButton(
                             style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(userController.text.isEmpty && passwordController.text.isEmpty ? Color(0xffD1D5DB):Theme.of(context).primaryColor)),
-                            onPressed: () {}, child: Text("Login",style: TextStyle(color: userController.text.isEmpty && passwordController.text.isEmpty ? Color(0xff6B7280):Colors.white),)))),
+                            onPressed: () {}, child: Text("Create account",style: TextStyle(color: userController.text.isEmpty && passwordController.text.isEmpty &&emailController.text.isEmpty ? Color(0xff6B7280):Colors.white),)))),
                     SizedBox(height: 20,),
-          
+
                   ],
                 ),
               ),
@@ -150,76 +159,72 @@ class _SingUpViewState extends State<SingUpView> {
                   ],
                 ),
               ),
-               Container(
-                 padding: EdgeInsets.symmetric(horizontal: 24),
-                 child:  Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                   GestureDetector(
-                     onTap: () {
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
 
-                     },
-                     child: Container(
-                       padding: EdgeInsets.symmetric(horizontal: 40),
-                       width: 154,height: 60,
-                     decoration: BoxDecoration(
-                         border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
-                         borderRadius: BorderRadius.circular(10)
-
-
-                     ),
-                       child: Row(
-
-                         children: [
-                           Image.asset("assets/img/google.png"),
-                           SizedBox(width: 5,),
-                           Text("Google",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
-                         ],
-                       ),
-                     ),
-                   ),
-                   GestureDetector(
-                     onTap: () {
-
-                     },
-                     child: Container(
-                       padding: EdgeInsets.symmetric(horizontal: 30),
-
-                       width: 154,height: 60,
-                     decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
-                        borderRadius: BorderRadius.circular(10)
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        width: 154,height: 60,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
+                            borderRadius: BorderRadius.circular(10)
 
 
-                     ),
-                       child: Row(
+                        ),
+                        child: Row(
 
-                         children: [
-                           Image.asset("assets/img/Facebook.png"),
-                           SizedBox(width: 5,),
-                           Text("Facebook",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
-                         ],
-                       ),
-                     ),
-                   ),
-                 ],),
-               ),
+                          children: [
+                            Image.asset("assets/img/google.png"),
+                            SizedBox(width: 5,),
+                            Text("Google",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+
+                        width: 154,height: 60,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
+                            borderRadius: BorderRadius.circular(10)
+
+
+                        ),
+                        child: Row(
+
+                          children: [
+                            Image.asset("assets/img/Facebook.png"),
+                            SizedBox(width: 5,),
+                            Text("Facebook",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],),
+              ),
 
 
 
-          
+
             ],
           ),
         ),
       ),
     );
+
   }
 }
-
-  
-
-
-
 class LinePainter extends CustomPainter {
   // Optional: Add properties to customize the line (color, thickness etc.)
   final Color lineColor;

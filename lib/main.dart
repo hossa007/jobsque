@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jobsque/sign_up/sing_up_view.dart';
 import 'package:jobsque/splash_screen/splash.dart';
 
+import 'create_account/create_view.dart';
 import 'onboarding/Onboarding_view.dart';
 
 void main() {
@@ -15,10 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData(
+            primaryColor: Color(0xff3366FF),
+
+        ),
 
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home:SingUpView(),
+      home:CreateAccount(),
     );
   }
 }

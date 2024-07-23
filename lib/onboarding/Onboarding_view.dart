@@ -29,7 +29,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                     height: 16,
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SingUpView(),));
+                      },
                       child: Text(
                         "Skip",
                         style: TextStyle(
