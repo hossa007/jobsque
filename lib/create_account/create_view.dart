@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class  CreateAccount extends StatefulWidget{
+class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 
   @override
@@ -8,10 +8,11 @@ class  CreateAccount extends StatefulWidget{
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  final  TextEditingController userController = TextEditingController();
-  final  TextEditingController emailController = TextEditingController();
-  final  TextEditingController passwordController = TextEditingController();
-   Color color = Colors.grey;
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  Color color = Colors.grey;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +40,8 @@ class _CreateAccountState extends State<CreateAccount> {
                     ),
                     Text(
                       "Cereate Account",
-                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(
                       height: 8,
@@ -59,9 +61,9 @@ class _CreateAccountState extends State<CreateAccount> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              width: 2.0,
-                              color: Color(0xff3366FF),
-                            )),
+                          width: 2.0,
+                          color: Color(0xff3366FF),
+                        )),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         fillColor: Colors.blue,
@@ -76,12 +78,11 @@ class _CreateAccountState extends State<CreateAccount> {
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
-
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                width: 2.0,
-                                color: Color(0xff3366FF),
-                              )),
+                            width: 2.0,
+                            color: Color(0xff3366FF),
+                          )),
                           prefixIcon: Icon(Icons.email_outlined),
                           hintText: "Email",
                           border: OutlineInputBorder(
@@ -91,52 +92,92 @@ class _CreateAccountState extends State<CreateAccount> {
                     SizedBox(
                       height: 16,
                     ),
-                    TextFormField(
-                      onEditingComplete: () {
+                      TextFormField (
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus();
                         setState(() {
 
                         });
-                      },
+                        if (passwordController.text.length >= 8) {
+                          color = Colors.green;
+                        }
+                      } ,
                       onTap: () {
-                        setState(() {
+                        if (passwordController.text.length < 8) {
+                          color = Colors.red;
+                        } else if (passwordController.text.length >= 8) {
+                          color = Colors.green;
+                        }
 
-
-
-                        });
+                        setState(() {});
                       },
                       controller: passwordController,
                       decoration: InputDecoration(
-
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                width: 2.0,
-                                color: Color(0xff3366FF),
-                              )),
+                            width: 2.0,
+                            color: Color(0xff3366FF),
+                          )),
                           prefixIcon: Icon(Icons.lock),
                           hintText: "Password",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0))),
                       obscureText: true, // Hide the entered text for passwords
                     ),
-                      Text("Password must be at least 8 characters",style: TextStyle(color: color),),
-                    SizedBox(height: 137,),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      "Password must be at least 8 characters",
+                      style: TextStyle(color: color),
+                    ),
+                    SizedBox(
+                      height: 105,
+                    ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 65  ),
+                      padding: EdgeInsets.symmetric(horizontal: 65),
                       child: Row(
                         children: [
-                          Text("Already have an account?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Color(0xff9CA3AF)),),
-                          TextButton(onPressed: () {}, child: Text("Login",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor)))
+                          Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff9CA3AF)),
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text("Login",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Theme.of(context).primaryColor)))
                         ],
                       ),
                     ),
-                    Center(child: SizedBox(
-                        height: 48,
-                        width: 327,
-                        child: FilledButton(
-                            style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(userController.text.isEmpty && passwordController.text.isEmpty ? Color(0xffD1D5DB):Theme.of(context).primaryColor)),
-                            onPressed: () {}, child: Text("Create account",style: TextStyle(color: userController.text.isEmpty && passwordController.text.isEmpty &&emailController.text.isEmpty ? Color(0xff6B7280):Colors.white),)))),
-                    SizedBox(height: 20,),
-
+                    Center(
+                        child: SizedBox(
+                            height: 48,
+                            width: 327,
+                            child: FilledButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        userController.text.isEmpty || passwordController.text.isEmpty || emailController.text.isEmpty
+                                            ? Color(0xffD1D5DB)
+                                            : Theme.of(context).primaryColor)),
+                                onPressed: () {},
+                                child: Text(
+                                  "Create account",
+                                  style: TextStyle(
+                                      color: userController.text.isEmpty &&
+                                              passwordController.text.isEmpty &&
+                                              emailController.text.isEmpty
+                                          ? Color(0xff6B7280)
+                                          : Colors.white),
+                                )))),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -145,15 +186,21 @@ class _CreateAccountState extends State<CreateAccount> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CustomPaint(
-                      painter: LinePainter(lineColor: Colors.black.withOpacity(.30)),
+                      painter:
+                          LinePainter(lineColor: Colors.black.withOpacity(.30)),
                       size: Size(70, 50.0),
                       // Set the size of the painted area
                     ),
-                    SizedBox(width: 12,),
+                    SizedBox(
+                      width: 12,
+                    ),
                     Text("Or Login With Account"),
-                    SizedBox(width: 12,),
+                    SizedBox(
+                      width: 12,
+                    ),
                     CustomPaint(
-                      painter: LinePainter(lineColor: Colors.black.withOpacity(.30)),
+                      painter:
+                          LinePainter(lineColor: Colors.black.withOpacity(.30)),
                       size: Size(70, 50.0), // Set the size of the painted area
                     ),
                   ],
@@ -161,70 +208,74 @@ class _CreateAccountState extends State<CreateAccount> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
-                child:  Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 40),
-                        width: 154,height: 60,
+                        width: 154,
+                        height: 60,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
-                            borderRadius: BorderRadius.circular(10)
-
-
-                        ),
+                            border: Border.all(
+                                color: Color(0xffD1D5DB), width: 2.0),
+                            borderRadius: BorderRadius.circular(10)),
                         child: Row(
-
                           children: [
                             Image.asset("assets/img/google.png"),
-                            SizedBox(width: 5,),
-                            Text("Google",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Google",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 30),
-
-                        width: 154,height: 60,
+                        width: 154,
+                        height: 60,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffD1D5DB),width: 2.0),
-                            borderRadius: BorderRadius.circular(10)
-
-
-                        ),
+                            border: Border.all(
+                                color: Color(0xffD1D5DB), width: 2.0),
+                            borderRadius: BorderRadius.circular(10)),
                         child: Row(
-
                           children: [
                             Image.asset("assets/img/Facebook.png"),
-                            SizedBox(width: 5,),
-                            Text("Facebook",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,),),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Facebook",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  ],),
+                  ],
+                ),
               ),
-
-
-
-
             ],
           ),
         ),
       ),
     );
-
   }
 }
+
 class LinePainter extends CustomPainter {
   // Optional: Add properties to customize the line (color, thickness etc.)
   final Color lineColor;
