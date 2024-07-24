@@ -12,6 +12,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   Color color = Colors.grey;
+  bool isHide = true;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         fillColor: Colors.blue,
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: Icon(Icons.person_2_outlined,color: Color(0xffD1D5DB),size: 27),
                         hintText: "Username",
                       ),
                       obscureText: false, // Hide the entered text for passwords
@@ -83,7 +84,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             width: 2.0,
                             color: Color(0xff3366FF),
                           )),
-                          prefixIcon: Icon(Icons.email_outlined),
+                          prefixIcon: Icon(Icons.email_outlined,color: Color(0xffD1D5DB),size: 27,),
                           hintText: "Email",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0))),
@@ -118,18 +119,25 @@ class _CreateAccountState extends State<CreateAccount> {
                             width: 2.0,
                             color: Color(0xff3366FF),
                           )),
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.lock_outline_rounded,color: Color(0xffD1D5DB),size: 27,),
+                          suffixIcon: IconButton(onPressed: () {
+                            isHide  = !isHide;
+                            print(isHide);
+                            setState(() {
+
+                            });
+                          },icon: Icon(isHide==true ?Icons.visibility_off_outlined : Icons.visibility_outlined,color: Color(0xffD1D5DB),size: 27,)),
                           hintText: "Password",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0))),
-                      obscureText: true, // Hide the entered text for passwords
+                      obscureText: isHide, // Hide the entered text for passwords
                     ),
                     SizedBox(
                       height: 12,
                     ),
                     Text(
                       "Password must be at least 8 characters",
-                      style: TextStyle(color: color),
+                      style: TextStyle(color: color,fontSize: 16,fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
                       height: 105,
@@ -162,15 +170,15 @@ class _CreateAccountState extends State<CreateAccount> {
                             child: FilledButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStatePropertyAll(
-                                        userController.text.isEmpty || passwordController.text.isEmpty || emailController.text.isEmpty
+                                        userController.text.isEmpty || passwordController.text.length <8|| emailController.text.isEmpty
                                             ? Color(0xffD1D5DB)
                                             : Theme.of(context).primaryColor)),
                                 onPressed: () {},
                                 child: Text(
                                   "Create account",
                                   style: TextStyle(
-                                      color: userController.text.isEmpty &&
-                                              passwordController.text.isEmpty &&
+                                      color: userController.text.isEmpty ||
+                                              passwordController.text.length <8 ||
                                               emailController.text.isEmpty
                                           ? Color(0xff6B7280)
                                           : Colors.white),
