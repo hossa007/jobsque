@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -8,6 +11,15 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  Future<void> getData()async{
+    final  response = await Dio().get("https://project.amit-learning.com/api/jobs/sugest/2");
+    print(response.data);
+  }
+@override
+  void initState() {
+getData();
+super.initState();
+  }
   final TextEditingController userController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../create_account/create_view.dart';
+import '../forgot_password/forget_password_view.dart';
+
 class SingUpView extends StatefulWidget {
   const SingUpView({super.key});
 
@@ -107,7 +110,9 @@ class _SingUpViewState extends State<SingUpView> {
                         ),
                         Text('Remember me'),
                          SizedBox(width: 82,),
-                         TextButton(onPressed: () {}, child: Text("Forgot Password?",style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 14,fontWeight: FontWeight.w400),)),
+                         TextButton(onPressed: () {
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => PassForget(),));
+                         }, child: Text("Forgot Password?",style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 14,fontWeight: FontWeight.w400),)),
                       ],
                     ),
                     SizedBox(height: 173,),
@@ -116,7 +121,10 @@ class _SingUpViewState extends State<SingUpView> {
                       child: Row(
                         children: [
                           Text("Dont’t have an account?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Color(0xff9CA3AF)),),
-                          TextButton(onPressed: () {}, child: Text("Register",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor)))
+
+                          TextButton(onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount(),));
+                          }, child: Text("Register",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Theme.of(context).primaryColor)))
                         ],
                       ),
                     ),

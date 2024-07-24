@@ -3,6 +3,7 @@ import 'package:jobsque/sign_up/sing_up_view.dart';
 import 'package:jobsque/splash_screen/splash.dart';
 
 import 'create_account/create_view.dart';
+import 'forgot_password/forget_password_view.dart';
 import 'onboarding/Onboarding_view.dart';
 
 void main() {
