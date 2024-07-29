@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:jobsque/desgin/app_img.dart';
 
 import '../create_account/create_view.dart';
 import '../sign_up/sing_up_view.dart';
 
-class PassForget extends StatefulWidget{
+class PassForget extends StatefulWidget {
   const PassForget({super.key});
 
   @override
@@ -15,9 +16,8 @@ class _PassForgetState extends State<PassForget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body:SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -32,15 +32,16 @@ class _PassForgetState extends State<PassForget> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
-                        IconButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SingUpView(),));
-                        }, icon: Icon(Icons.arrow_back)),
-                        Image.asset(
-                          "assets/img/Logo.png",
-                          width: 81,
-                          height: 19,
-                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SingUpView(),
+                                  ));
+                            },
+                            icon: Icon(Icons.arrow_back)),
+                        AppImg(path: "Logo.png", width: 81, height: 19),
                       ],
                     )),
                 SizedBox(
@@ -48,8 +49,7 @@ class _PassForgetState extends State<PassForget> {
                 ),
                 Text(
                   "Reset Password",
-                  style:
-                  TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 8,
@@ -64,37 +64,35 @@ class _PassForgetState extends State<PassForget> {
                 SizedBox(
                   height: 40,
                 ),
-          
                 TextFormField(
                   onTapOutside: (event) {
                     FocusScope.of(context).unfocus();
-                    setState(() {
-
-                    });
-                  } ,
+                    setState(() {});
+                  },
 
                   controller: emailController,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            width: 2.0,
-                            color: Color(0xff3366FF),
-                          )),
-                      prefixIcon: Icon(Icons.email_outlined,color: Color(0xffD1D5DB),size: 27,),
+                        width: 2.0,
+                        color: Color(0xff3366FF),
+                      )),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Color(0xffD1D5DB),
+                        size: 27,
+                      ),
                       hintText: "Email",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0))),
                   obscureText: false, // Hide the entered text for passwords
                 ),
-          
                 SizedBox(
                   height: 250,
                 ),
-          
                 SizedBox(
                   height: 105,
                 ),
-          
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Row(
@@ -107,7 +105,13 @@ class _PassForgetState extends State<PassForget> {
                             color: Color(0xff9CA3AF)),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SingUpView(),
+                                ));
+                          },
                           child: Text("Login",
                               style: TextStyle(
                                   fontSize: 14,
@@ -116,28 +120,27 @@ class _PassForgetState extends State<PassForget> {
                     ],
                   ),
                 ),
-                Center(
+               Center(
                     child: SizedBox(
                         height: 48,
                         width: 327,
                         child: FilledButton(
-
                             style: ButtonStyle(
-
                                 backgroundColor: MaterialStatePropertyAll(
-                                     emailController.text.isEmpty
+                                    emailController.text.isEmpty
                                         ? Color(0xffD1D5DB)
                                         : Theme.of(context).primaryColor)),
                             onPressed: () {},
                             child: Text(
-                              "Create account",
+                              "Request password reset",
                               style: TextStyle(
-                                  color:
-                                      emailController.text.isEmpty
+                                  color: emailController.text.isEmpty
                                       ? Color(0xff6B7280)
                                       : Colors.white),
-                            )))),
-
+                            )
+                        )
+                    )
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -146,7 +149,6 @@ class _PassForgetState extends State<PassForget> {
           ),
         ),
       ),
-
     );
   }
 }

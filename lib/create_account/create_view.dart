@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../sign_up/sing_up_view.dart';
+
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 
@@ -166,7 +168,10 @@ super.initState();
                                 color: Color(0xff9CA3AF)),
                           ),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SingUpView(),));
+
+                              },
                               child: Text("Login",
                                   style: TextStyle(
                                       fontSize: 14,
