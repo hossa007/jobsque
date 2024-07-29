@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jobsque/desgin/app_img.dart';
 
 import '../create_account/create_view.dart';
+import '../desgin/app_input.dart';
 import '../sign_up/sing_up_view.dart';
 
 class PassForget extends StatefulWidget {
@@ -64,19 +65,24 @@ class _PassForgetState extends State<PassForget> {
                 SizedBox(
                   height: 40,
                 ),
-                TextFormField(
-                  onTapOutside: (event) {
-                    FocusScope.of(context).unfocus();
-                    setState(() {});
-                  },
+                AppInput(
+                  content: "Email",
+                  prefixIcon: Icon(
+                    Icons.email_outlined,
+                    color: Color(0xffD1D5DB),
+                    size: 27,
+                  ),
+                  onTapOutside: () {
+                    setState(() {
 
+                    });
+
+                  },
                   controller: emailController,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                        width: 2.0,
-                        color: Color(0xff3366FF),
-                      )),
+                          )),
                       prefixIcon: Icon(
                         Icons.email_outlined,
                         color: Color(0xffD1D5DB),
@@ -85,8 +91,31 @@ class _PassForgetState extends State<PassForget> {
                       hintText: "Email",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0))),
-                  obscureText: false, // Hide the entered text for passwords
+                  obscureText: false,
                 ),
+                // TextFormField(
+                //   onTapOutside: (event) {
+                //     FocusScope.of(context).unfocus();
+                //     setState(() {});
+                //   },
+                //
+                //   controller: emailController,
+                //   decoration: InputDecoration(
+                //       focusedBorder: OutlineInputBorder(
+                //           borderSide: BorderSide(
+                //         width: 2.0,
+                //         color: Color(0xff3366FF),
+                //       )),
+                //       prefixIcon: Icon(
+                //         Icons.email_outlined,
+                //         color: Color(0xffD1D5DB),
+                //         size: 27,
+                //       ),
+                //       hintText: "Email",
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(10.0))),
+                //   obscureText: false, // Hide the entered text for passwords
+                // ),
                 SizedBox(
                   height: 250,
                 ),
