@@ -4,16 +4,19 @@ class AppInput extends StatelessWidget {
   final String content;
   final TextEditingController? controller;
   final Icon prefixIcon;
-  final VoidCallback ? onTapOutside;
+  final VoidCallback?  onTapOutside,onTap,onEditingComplete;
   final InputDecoration? decoration;
   final bool? obscureText;
   final double width;
 
-  const AppInput({super.key, required this.content,  this.controller, required this.prefixIcon, this.onTapOutside, this.decoration, this.obscureText,  this.width = 2.0});
+
+  const AppInput({super.key, required this.content,  this.controller, required this.prefixIcon, required this.onTapOutside, this.decoration, this.obscureText,  this.width = 2.0,required  this.onTap,  this.onEditingComplete});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onEditingComplete: onEditingComplete,
+      onTap: onTap,
       onTapOutside: (event) {
         FocusScope.of(context).unfocus();
       },

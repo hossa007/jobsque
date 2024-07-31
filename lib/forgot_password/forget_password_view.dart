@@ -66,6 +66,11 @@ class _PassForgetState extends State<PassForget> {
                   height: 40,
                 ),
                 AppInput(
+                  onTap: () {
+                    setState(() {
+
+                    });
+                  },
                   content: "Email",
                   prefixIcon: Icon(
                     Icons.email_outlined,
