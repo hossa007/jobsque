@@ -1,10 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jobsque/desgin/app_button.dart';
 import 'package:jobsque/desgin/app_img.dart';
 import 'package:jobsque/desgin/app_input.dart';
 
+import '../api_model/login_api.dart';
 import '../create_account/create_view.dart';
 import '../forgot_password/forget_password_view.dart';
+import '../home_screen_view/Home_view.dart';
 
 class SingUpView extends StatefulWidget {
   const SingUpView({super.key});
@@ -12,8 +15,32 @@ class SingUpView extends StatefulWidget {
   @override
   State<SingUpView> createState() => _SingUpViewState();
 }
-
+late Dio response;
 class _SingUpViewState extends State<SingUpView> {
+  late ProfileModel model;
+  late Error error;
+  Future<void> getData() async{
+    try{
+      final response = await Dio().post("https://project2.amit-learning.com/api/auth/login"
+          ,data: {
+            "email":userController.text,
+            "password":passwordController.text,
+          }
+      );
+
+      model =  ProfileModel.fromJson(response.data);
+      error =   Error.fromJson(response.data);
+
+      print("*********************");
+      print(model.status);
+      print("*********************");
+    }on DioException catch(e){
+      print("*********************");
+      print(error.massage);
+      print("*********************");
+    }
+
+  }
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isChecked = false; // Define border style
@@ -166,6 +193,10 @@ class _SingUpViewState extends State<SingUpView> {
                             width: 327,
                             child: AppButton(
                               onPressed:(){
+                                getData();
+                                if(model.status == true){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(),));
+                                }
                                 setState(() {
 
                                 });
