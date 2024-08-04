@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jobsque/sign_up/sing_up_view.dart';
 import 'package:jobsque/splash_screen/splash.dart';
+import 'package:jobsque/test.dart';
 
 import 'create_account/create_view.dart';
 import 'forgot_password/create_new_pass_view.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home:SingUpView(),
+      home:Test(),
     );
   }
 }

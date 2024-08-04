@@ -1,12 +1,13 @@
 class ProfileModel {
-  late final User user;
-  late final String token;
-  late final bool status;
+  late  User user;
+  late  String token;
+  late  bool status;
+  late Error error;
 
   ProfileModel.fromJson(Map<String, dynamic> json){
-    user = User.fromJson(json['user']);
-    token = json['token'];
-    status = json['status'];
+    user = User.fromJson(json['user']??{});
+    token = json['token']??"";
+    status = json['status']??false;
   }
 }
 class User {
@@ -20,4 +21,14 @@ class User {
     updatedAt = json['updated_at'];
   }
 
+}
+class Error {
+
+  late final String massage;
+  late final bool status;
+
+  Error.fromJson(Map<String, dynamic> json){
+    massage = json['massage'];
+    status = json['status'];
+  }
 }
