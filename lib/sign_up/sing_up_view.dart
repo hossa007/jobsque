@@ -18,7 +18,7 @@ class SingUpView extends StatefulWidget {
 late Dio response;
 class _SingUpViewState extends State<SingUpView> {
   late ProfileModel model;
-  late Error error;
+
   Future<void> getData() async{
     try{
       final response = await Dio().post("https://project2.amit-learning.com/api/auth/login"
@@ -29,21 +29,22 @@ class _SingUpViewState extends State<SingUpView> {
       );
 
       model =  ProfileModel.fromJson(response.data);
-      error =   Error.fromJson(response.data);
-
-      print("*********************");
+      if(response.statusCode == 401){
+         CircularProgressIndicator();
+         setState(() {
+           
+         });
+      }
       print(model.status);
-      print("*********************");
     }on DioException catch(e){
-      print("*********************");
-      print(error.massage);
-      print("*********************");
+      print(e.message);
     }
 
   }
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isChecked = false; // Define border style
+@override
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +197,12 @@ class _SingUpViewState extends State<SingUpView> {
                                 getData();
                                 if(model.status == true){
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(),));
+                                }else{
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('تم الضغط على الزر'),
+                                    ),
+                                  );
                                 }
                                 setState(() {
 
