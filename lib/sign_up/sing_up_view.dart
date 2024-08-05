@@ -5,6 +5,7 @@ import 'package:jobsque/desgin/app_img.dart';
 import 'package:jobsque/desgin/app_input.dart';
 
 import '../api_model/login_api.dart';
+import '../core/dio_helper.dart';
 import '../create_account/create_view.dart';
 import '../forgot_password/forget_password_view.dart';
 import '../home_screen_view/Home_view.dart';
@@ -17,29 +18,24 @@ class SingUpView extends StatefulWidget {
 }
 late Dio response;
 class _SingUpViewState extends State<SingUpView> {
-  late ProfileModel model;
-
-  Future<void> getData() async{
-    try{
-      final response = await Dio().post("https://project2.amit-learning.com/api/auth/login"
-          ,data: {
-            "email":userController.text,
-            "password":passwordController.text,
-          }
+  bool isLoading = false;
+  Future<void> sendInfo ()async{
+    isLoading = true;
+    final response = await DioHelper.send("/auth/login",data: {
+      "email":userController.text,
+      "password":passwordController.text
+    });
+    if(response.isSuccess){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(),));
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response.message!),
+        ),
       );
-
-      model =  ProfileModel.fromJson(response.data);
-      if(response.statusCode == 401){
-         CircularProgressIndicator();
-         setState(() {
-           
-         });
-      }
-      print(model.status);
-    }on DioException catch(e){
-      print(e.message);
     }
-
+    isLoading = false;
+    setState(() {});
   }
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -194,16 +190,7 @@ class _SingUpViewState extends State<SingUpView> {
                             width: 327,
                             child: AppButton(
                               onPressed:(){
-                                getData();
-                                if(model.status == true){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(),));
-                                }else{
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('تم الضغط على الزر'),
-                                    ),
-                                  );
-                                }
+                                sendInfo();
                                 setState(() {
 
                                 });

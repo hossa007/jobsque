@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jobsque/core/dio_helper.dart';
 import 'package:jobsque/desgin/app_button.dart';
 import 'package:jobsque/desgin/app_input.dart';
+import 'package:jobsque/sign_up/sing_up_view.dart';
 
 import 'api_model/login_api.dart';
 
@@ -13,30 +15,25 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  late ProfileModel model;
-
-  Future<void> getData() async{
-    try{
-      final response = await Dio().post("https://project2.amit-learning.com/api/auth/login"
-          ,data: {
-            "email":one.text,
-            "password":two.text,
-          }
-      );
-
-      model =  ProfileModel.fromJson(response.data);
-      print(model.status);
-    }on DioError catch(e){
-      print("error");
-      print(model.error.massage);
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text("error"),));
-    }
-
+  bool isLoading = false;
+Future<void> sendInfo ()async{
+  isLoading = true;
+  final response = await DioHelper.send("/auth/login",data: {
+    "email":one.text,
+    "password":two.text
+  });
+  if(response.isSuccess){
+Navigator.push(context, MaterialPageRoute(builder: (context) => SingUpView(),));
+  }else{
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(response.message!),
+      ),
+    );
   }
-
+  isLoading = false;
+  setState(() {});
+}
 
 
   final TextEditingController one = TextEditingController();
@@ -51,17 +48,17 @@ class _TestState extends State<Test> {
           SizedBox(height: 10,),
           AppInput(content: "content", prefixIcon: Icon(Icons.add), onTapOutside: (){}, onTap: (){},controller:two ,),
           SizedBox(height: 10,),
-
+          isLoading ? Center(child: CircularProgressIndicator(),):
           AppButton(content: "click",onPressed: (){
-            getData();
-            if( model.status == true){
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.green,
-                    content: Text("welcome"),));
-              print("********");
-              print(model.status);
-            }
+            sendInfo();
+            print(isLoading);
+            // if( model.status == true){
+            //   ScaffoldMessenger.of(context).showSnackBar(
+            //       SnackBar(
+            //         backgroundColor: Colors.green,
+            //         content: Text("welcome"),));
+            //   print("********");
+            // }
 
           },textColor: Colors.red, color: Colors.green,),
         ],
