@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsque/desgin/app_button.dart';
 import 'package:jobsque/desgin/app_img.dart';
 import 'package:jobsque/desgin/app_input.dart';
+import 'package:jobsque/sign_up/cubit.dart';
 
 import '../api_model/login_api.dart';
 import '../core/dio_helper.dart';
@@ -18,28 +20,15 @@ class SingUpView extends StatefulWidget {
 }
 late Dio response;
 class _SingUpViewState extends State<SingUpView> {
-  bool isLoading = false;
-  Future<void> sendInfo ()async{
-    isLoading = true;
-    final response = await DioHelper.send("/auth/login",data: {
-      "email":userController.text,
-      "password":passwordController.text
-    });
-    if(response.isSuccess){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(),));
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(response.message!),
-        ),
-      );
-    }
-    isLoading = false;
-    setState(() {});
+  late SingUpCubit cubit;
+  @override
+  void initState() {
+cubit = BlocProvider.of(context);
+    super.initState();
   }
-  final TextEditingController userController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool isChecked = false; // Define border style
+
+
+  // Define border style
 @override
 
   @override
@@ -83,56 +72,69 @@ class _SingUpViewState extends State<SingUpView> {
                     SizedBox(
                       height: 44,
                     ),
-                    AppInput(
+                    BlocBuilder(
+                        bloc: cubit,
+                        builder: (context, state) =>  AppInput(
 
-                      onTap: () {
-                        setState(() {
+                        onTap: () {
+                          setState(() {
 
-                        });
-                      },
-                        controller: userController,
+                          });
+                        },
+                        controller: cubit.userController,
                         onTapOutside: () {
-                          setState(() {});
                         },
                         content: "Username",
                         prefixIcon: Icon(Icons.person)),
+                        ),
                     SizedBox(
                       height: 16,
                     ),
+                    BlocBuilder(
+                      bloc: cubit,
+                      builder: (context, state) =>  AppInput(
+                      onEditingComplete: () {
+                        FocusScope.of(context).unfocus();
+
+                      },
+                      onTap: () {
+
+                      },
+                      onTapOutside: () {
+                      },
+                      content: "Password",
+                      prefixIcon: Icon(Icons.lock),
+                      controller: cubit.passwordController,
+                    ),),
                     AppInput(
                       onEditingComplete: () {
                         FocusScope.of(context).unfocus();
 
-                        setState(() {
-
-                        });
                       },
                       onTap: () {
-                        setState(() {
 
-                        });
                       },
                       onTapOutside: () {
-                        setState(() {});
                       },
                       content: "Password",
                       prefixIcon: Icon(Icons.lock),
-                      controller: passwordController,
+                      controller: cubit.passwordController,
                     ),
                     Row(
                       children: [
-                        Checkbox(
+                        BlocBuilder(
+                          bloc: cubit,
+                          builder: (context, state) =>Checkbox(
                           checkColor: Colors.white,
-                          fillColor: MaterialStatePropertyAll(isChecked == true
+                          fillColor: MaterialStatePropertyAll(cubit.isChecked == true
                               ? Colors.blueAccent
                               : Colors.white),
-                          value: isChecked,
+                          value: cubit.isChecked,
                           onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
+                            cubit.isChecked = value!;
+
                           },
-                        ),
+                        ),),
                         Text('Remember me'),
                         SizedBox(
                           width: 82,
@@ -190,18 +192,18 @@ class _SingUpViewState extends State<SingUpView> {
                             width: 327,
                             child: AppButton(
                               onPressed:(){
-                                sendInfo();
+                                cubit.sendInfo(context);
                                 setState(() {
 
                                 });
                               } ,
-                              textColor: userController.text.isEmpty || passwordController.text.isEmpty ? Color(0xff6B7280) : Colors.white ,
-                              color:userController.text.isEmpty || passwordController.text.isEmpty ? Color(0xffD1D5DB) : Theme.of(context).primaryColor ,
+                              textColor: cubit.userController.text.isEmpty || cubit.passwordController.text.isEmpty ? Color(0xff6B7280) : Colors.white ,
+                              color:cubit.userController.text.isEmpty || cubit.passwordController.text.isEmpty ? Color(0xffD1D5DB) : Theme.of(context).primaryColor ,
                                 content: "Login"
 
 
                             )
-                            
+
                             // FilledButton(
                             //     style: ButtonStyle(
                             //         backgroundColor: MaterialStatePropertyAll(

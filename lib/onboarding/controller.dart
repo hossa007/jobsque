@@ -24,6 +24,7 @@ void buttonAction (context){
   }else if (onChanging == 2){
     navigate(context);
   }
-
 }
+
+
 }
